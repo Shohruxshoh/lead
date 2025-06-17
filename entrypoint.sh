@@ -28,5 +28,5 @@ else:
 EOF
 
 echo "🚀 Gunicorn ishga tushmoqda..."
-gunicorn core.wsgi:application --bind 0.0.0.0:8000
+
 exec "$@"

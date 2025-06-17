@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
+print(86, os.getenv('POSTGRES_HOST', 'localhost'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
