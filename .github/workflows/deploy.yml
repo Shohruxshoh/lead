@@ -1,0 +1,33 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy to EC2 server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Upload project to EC2
+      run: |
+        rsync -avz --exclude '.git' --exclude '__pycache__' ./ ${{ secrets.EC2_HOST }}:${{ secrets.EC2_PROJECT_DIR }}
+
+    - name: Deploy via SSH
+      run: |
+        ssh ${{ secrets.EC2_HOST }} << 'EOF'
+          cd ${{ secrets.EC2_PROJECT_DIR }}
+          docker-compose down
+          docker-compose up --build -d
+        EOF

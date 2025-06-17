@@ -5,11 +5,11 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
-COPY requirements.txt .
+COPY requirements.txt /code/requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY . .
+COPY . /code
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY entrypoint.sh /code/entrypoint.sh
+RUN chmod +x /code/entrypoint.sh
+ENTRYPOINT ["/code/entrypoint.sh"]
