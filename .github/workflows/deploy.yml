@@ -19,8 +19,9 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_HOST }} "
-            cd /home/ubuntu/lead/ &&
-            git pull origin main &&
-            docker-compose down &&
-            docker-compose up -d --build
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_HOST }} << 'EOF'
+          cd /home/ubuntu/lead/
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
+          EOF
