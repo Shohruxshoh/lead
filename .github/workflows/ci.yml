@@ -31,7 +31,8 @@ jobs:
           - 6379:6379
 
     env:
-      DJANGO_SECRET_KEY: supersecretkey
+      TESTING: 1
+      DJANGO_SECRET_KEY: test-secret
       POSTGRES_DB: leads_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
